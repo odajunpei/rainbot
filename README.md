@@ -1,24 +1,4 @@
-# README
+雨の日は朝7時にラインを送ってくれるラインBot
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+友達追加→https://lin.ee/Ay3VkEP
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
