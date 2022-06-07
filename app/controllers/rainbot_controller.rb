@@ -22,7 +22,7 @@ class RainbotController < ApplicationController
           # event.message['text']：ユーザーから送られたメッセージ
           input = event.message['text']
           url  = "https://www.drk7.jp/weather/xml/13.xml"
-          xml  = open(url).read.toutf8 # open でエラーになるときは URI.open としてみてください
+          xml  = URI.open(url).read.toutf8 # open でエラーになるときは URI.open としてみてください
           doc = REXML::Document.new(xml)
           xpath = 'weatherforecast/pref/area[4]/'
           # 当日朝のメッセージの送信の下限値は20％としているが、明日・明後日雨が降るかどうかの下限値は30％としている
