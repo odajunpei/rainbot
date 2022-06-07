@@ -93,6 +93,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.13.6-x86_64-linux)
       racc (~> 1.4)
+    pg (1.1.4)
     puma (4.3.12)
       nio4r (~> 2.0)
     racc (1.6.0)
@@ -166,6 +167,7 @@ DEPENDENCIES
   dotenv-rails
   line-bot-api
   listen (~> 3.2)
+  pg (= 1.1.4)
   puma (~> 4.1)
   rails (~> 6.0.3, >= 6.0.3.4)
   spring
