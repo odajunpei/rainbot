@@ -167,7 +167,7 @@ DEPENDENCIES
   dotenv-rails
   line-bot-api
   listen (~> 3.2)
-  pg (= 1.1.4)
+  pg
   puma (~> 4.1)
   rails (~> 6.0.3, >= 6.0.3.4)
   spring
