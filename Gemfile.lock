@@ -174,7 +174,7 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0.0)
   sqlite3 (~> 1.4)
   tzinfo-data
-  webpacker (= 4.0.7)
+  webpacker
 
 RUBY VERSION
    ruby 2.7.1p83
