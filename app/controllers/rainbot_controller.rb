@@ -39,7 +39,7 @@ class RainbotController < ApplicationController
                 "明日の天気は、\n　  6〜12時　#{per06to12}％\n　12〜18時　 #{per12to18}％\n　18〜24時　#{per18to24}％\n明日の朝、最新の天気予報で雨が降りそうか送るよ！"
             else
               push =
-                "明日の天気？\n教えないよ\n世間はそんなに甘くないからね！(晴れ)"
+                "明日は晴れダー！\n　  6〜12時　#{per06to12}％\n　12〜18時　 #{per12to18}％\n　18〜24時　#{per18to24}％"
             end
           when /.*(明後日|あさって).*/
             per06to12 = doc.elements[xpath + 'info[3]/rainfallchance/period[2]'].text
@@ -67,9 +67,7 @@ class RainbotController < ApplicationController
             per18to24 = doc.elements[xpath + 'info/rainfallchance/period[4]l'].text
             if per06to12.to_i >= min_per || per12to18.to_i >= min_per || per18to24.to_i >= min_per
               word =
-                ["雨だけど元気出していこうね！",
-                 "雨に負けずファイト！！",
-                 "雨だけどあなたの明るさでみんなを元気にしてあげて(^^)"].sample
+                ["雨だけど元気出していこう！"].sample
               push =
                 "今日は雨が降りそうだから傘があった方が安心！\n　  6〜12時　#{per06to12}％\n　12〜18時　 #{per12to18}％\n　18〜24時　#{per18to24}％\n#{word}"
             else
