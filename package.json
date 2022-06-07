@@ -19,5 +19,11 @@
   "bugs": {
     "url": "https://github.com/odajunpei/rainbot/issues"
   },
-  "homepage": "https://github.com/odajunpei/rainbot#readme"
+  "homepage": "https://github.com/odajunpei/rainbot#readme",
+  "dependencies": {
+    "@rails/webpacker": "^5.4.3"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^4.9.2"
+  }
 }
