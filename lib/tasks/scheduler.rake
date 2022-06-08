@@ -11,13 +11,16 @@ task :update_feed => :environment do
   }
 
   # 使用したxmlデータ（毎日朝6時更新）：以下URLを入力すれば見ることができます。
-  url  = "https://www.drk7.jp/weather/xml/13.xml"
+  url  = "https://www.drk7.jp/weather/xml/11.xml"
   # xmlデータをパース（利用しやすいように整形）
-  xml  = open( url ).read.toutf8 # open でエラーになるときは URI.open としてみてください
+  xml  = URI.open( url ).read.toutf8 # open でエラーになるときは URI.open としてみてください
   doc = REXML::Document.new(xml)
-  # パスの共通部分を変数化（area[4]は「東京地方」を指定している）
-  xpath = 'weatherforecast/pref/area[4]/info/rainfallchance/'
-  # 6時〜12時の降水確率（以下同様）
+  # パスの共通部分を変数化（area[4]は「埼玉南部地方」を指定している）
+  xpath = 'weatherforecast/pref/area[2]/info/rainfallchance/'
+  xpath2 = 'weatherforecast/pref/area[2]/info/temperature/'
+  # 6時〜24時の降水確率（以下同様）
+  temperature1 = doc.elements[xpath2 + 'range[1]'].text
+  temperature2 = doc.elements[xpath2 + 'range[2]'].text
   per06to12 = doc.elements[xpath + 'period[2]'].text
   per12to18 = doc.elements[xpath + 'period[3]'].text
   per18to24 = doc.elements[xpath + 'period[4]'].text
@@ -45,7 +48,7 @@ task :update_feed => :environment do
     end
     # 発信するメッセージの設定
     push =
-      "#{word1}\n#{word3}\n降水確率はこんな感じだよ。\n　  6〜12時　#{per06to12}％\n　12〜18時　 #{per12to18}％\n　18〜24時　#{per18to24}％\n#{word2}"
+      "#{word1}\n#{word3}\n気温は、 #{temperature1} ~ #{temperature2}\n  降水確率\n　  6〜12時　#{per06to12}％\n　12〜18時　 #{per12to18}％\n　18〜24時　#{per18to24}％\n#{word2}"
     # メッセージの発信先idを配列で渡す必要があるため、userテーブルよりpluck関数を使ってidを配列で取得
     user_ids = User.all.pluck(:line_id)
     message = {

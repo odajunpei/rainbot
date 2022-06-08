@@ -21,36 +21,40 @@ class RainbotController < ApplicationController
         when Line::Bot::Event::MessageType::Text
           # event.message['text']：ユーザーから送られたメッセージ
           input = event.message['text']
-          url  = "https://www.drk7.jp/weather/xml/13.xml"
+          url  = "https://www.drk7.jp/weather/xml/11.xml"
           xml  = URI.open(url).read.toutf8 # open でエラーになるときは URI.open としてみてください
           doc = REXML::Document.new(xml)
-          xpath = 'weatherforecast/pref/area[4]/'
+          xpath = 'weatherforecast/pref/area[2]/'
           # 当日朝のメッセージの送信の下限値は20％としているが、明日・明後日雨が降るかどうかの下限値は30％としている
           min_per = 30
           case input
             # 「明日」or「あした」というワードが含まれる場合
           when /.*(明日|あした).*/
             # info[2]：明日の天気
+            temperaturelow = doc.elements[xpath + 'info[2]/temperature/range[1]'].text
+            temperaturehigh = doc.elements[xpath + 'info[2]/temperature/range[2]'].text
             per06to12 = doc.elements[xpath + 'info[2]/rainfallchance/period[2]'].text
             per12to18 = doc.elements[xpath + 'info[2]/rainfallchance/period[3]'].text
             per18to24 = doc.elements[xpath + 'info[2]/rainfallchance/period[4]'].text
             if per06to12.to_i >= min_per || per12to18.to_i >= min_per || per18to24.to_i >= min_per
               push =
-                "明日の天気は、\n　  6〜12時　#{per06to12}％\n　12〜18時　 #{per12to18}％\n　18〜24時　#{per18to24}％\n明日の朝、最新の天気予報で雨が降りそうか送るよ！"
+                "明日の大宮の天気は、\n　  6〜12時　#{per06to12}％\n　12〜18時　 #{per12to18}％\n　18〜24時　#{per18to24}％\n  気温は\n  #{temperaturelow}  ~  #{temperaturehigh}\n  明日の朝、最新の天気予報で雨が降りそうか送るよ！"
             else
               push =
-                "明日は晴れダー！\n　  6〜12時　#{per06to12}％\n　12〜18時　 #{per12to18}％\n　18〜24時　#{per18to24}％"
+                "明日の大宮の天気は晴れダー！\n　  気温は\n  #{temperaturelow}  ~  #{temperaturehigh}\n  6〜12時　#{per06to12}％\n　12〜18時　 #{per12to18}％\n　18〜24時　#{per18to24}％"
             end
           when /.*(明後日|あさって).*/
+            temperaturelow = doc.elements[xpath + 'info[3]/temperature/range[1]'].text
+            temperaturehigh = doc.elements[xpath + 'info[3]/temperature/range[2]'].text
             per06to12 = doc.elements[xpath + 'info[3]/rainfallchance/period[2]'].text
             per12to18 = doc.elements[xpath + 'info[3]/rainfallchance/period[3]'].text
             per18to24 = doc.elements[xpath + 'info[3]/rainfallchance/period[4]'].text
             if per06to12.to_i >= min_per || per12to18.to_i >= min_per || per18to24.to_i >= min_per
               push =
-                "明後日は雨が降りそう…\n当日の朝に雨が降りそうだったらラインするよ！"
+                "明後日の大宮の天気は雨が降りそう…\n当日の朝に雨が降りそうだったらラインするよ！"
             else
               push =
-                "明後日は雨は降らない予定！\nまた当日の朝の最新の天気予報で雨が降りそうだったラインするよ！"
+                "明後日の大宮の天気は雨は降らない予定！\nまた当日の朝の最新の天気予報で雨が降りそうだったラインするよ！"
             end
           when /.*(かわいい|可愛い|カワイイ|きれい|綺麗|キレイ|素敵|ステキ|すてき|面白い|おもしろい|ありがと|すごい|スゴイ|スゴい|好き|頑張|がんば|ガンバ).*/
             push =
@@ -62,6 +66,8 @@ class RainbotController < ApplicationController
             push =
               "今日は後輩にジュースを奢ると運気アップ間違いなし！"
           else
+            temperaturelow = doc.elements[xpath + 'info/temperature/range[1]'].text
+            temperaturehigh = doc.elements[xpath + 'info/temperature/range[2]'].text
             per06to12 = doc.elements[xpath + 'info/rainfallchance/period[2]l'].text
             per12to18 = doc.elements[xpath + 'info/rainfallchance/period[3]l'].text
             per18to24 = doc.elements[xpath + 'info/rainfallchance/period[4]l'].text
@@ -69,12 +75,12 @@ class RainbotController < ApplicationController
               word =
                 ["雨だけど元気出していこう！"].sample
               push =
-                "今日は雨が降りそうだから傘があった方が安心！\n　  6〜12時　#{per06to12}％\n　12〜18時　 #{per12to18}％\n　18〜24時　#{per18to24}％\n#{word}"
+                "今日は雨が降りそうだから傘があった方が安心！\n　  気温は\n  #{temperaturelow}  ~  #{temperaturehigh}\n  6〜12時　#{per06to12}％\n　12〜18時　 #{per12to18}％\n　18〜24時　#{per18to24}％\n#{word}"
             else
               word =
                 ["素晴らしい一日になりますように！"].sample
               push =
-                "今日は雨は降らなさそうだよ。\n#{word}"
+                "今日は雨は降らなさそうだよ。\n#{word}\n  気温は\n  #{temperaturelow}  ~  #{temperaturehigh}\n"
             end
           end
           # テキスト以外（画像等）のメッセージが送られた場合
