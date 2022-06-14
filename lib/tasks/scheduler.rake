@@ -28,11 +28,7 @@ task :update_feed => :environment do
   min_per = 20
   if per06to12.to_i >= min_per || per12to18.to_i >= min_per || per18to24.to_i >= min_per
     word1 =
-      ["今日は後輩にジュースを奢ると運気アップ！",
-       "昨日ちゃんと後輩にジュース奢った？",
-       "今日は麦茶！",
-       "お昼ご飯カップラーメンてかわいそうだよね！",
-       "習慣は第二の天性なり"].sample
+      ["タイ料理屋で怒ってはいけません。"].sample
     word2 =
       ["one for all, all for one",
        "ジュースを奢ろう",
@@ -47,7 +43,7 @@ task :update_feed => :environment do
     end
     # 発信するメッセージの設定
     push =
-      "#{word1}\n#{word3}\n気温は、 #{temperature1} ~ #{temperature2}\n  降水確率\n　  6〜12時　#{per06to12}％\n　12〜18時　 #{per12to18}％\n　18〜24時　#{per18to24}％\n#{word2}"
+      "#{word1}\n#{word3}\n気温は、 #{temperature2}℃ ~ #{temperature1}　℃　\n降水確率\n　　  6〜12時　#{per06to12}％\n　12〜18時　 #{per12to18}％\n　18〜24時　#{per18to24}％\n#{word2}"
     # メッセージの発信先idを配列で渡す必要があるため、userテーブルよりpluck関数を使ってidを配列で取得
     user_ids = User.all.pluck(:line_id)
     message = {
