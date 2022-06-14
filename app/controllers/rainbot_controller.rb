@@ -65,22 +65,12 @@ class RainbotController < ApplicationController
           when /.*(おみくじ).*/
             push =
               "今日は後輩にジュースを奢ると運気アップ間違いなし！"
+          when /.*(こんにちわ|うるさい|おはよう).*/
+            push =
+              "うるさくないです。\n"
           else
-            temperaturelow = doc.elements[xpath + 'info/temperature/range[1]'].text
-            temperaturehigh = doc.elements[xpath + 'info/temperature/range[2]'].text
-            per06to12 = doc.elements[xpath + 'info/rainfallchance/period[2]l'].text
-            per12to18 = doc.elements[xpath + 'info/rainfallchance/period[3]l'].text
-            per18to24 = doc.elements[xpath + 'info/rainfallchance/period[4]l'].text
-            if per06to12.to_i >= min_per || per12to18.to_i >= min_per || per18to24.to_i >= min_per
-              word =
-                ["雨だけど元気出していこう！"].sample
               push =
-                "今日は雨が降りそうだから傘があった方が安心！\n　  気温は\n  #{temperaturelow}  ~  #{temperaturehigh}\n  6〜12時　#{per06to12}％\n　12〜18時　 #{per12to18}％\n　18〜24時　#{per18to24}％\n#{word}"
-            else
-              word =
-                ["素晴らしい一日になりますように！"].sample
-              push =
-                "今日は雨は降らなさそうだよ。\n#{word}\n  気温は\n  #{temperaturelow}  ~  #{temperaturehigh}\n"
+                "うるせぇ"
             end
           end
           # テキスト以外（画像等）のメッセージが送られた場合
