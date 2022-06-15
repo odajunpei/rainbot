@@ -63,9 +63,13 @@ class RainbotController < ApplicationController
             push =
               "こんにちは。\n声をかけてくれてありがとう\n今日があなたにとっていい日になりますように(^^)"
           when /.*(おみくじ).*/
+            word =
+              ["大吉","小吉", "中吉","凶","凶","大凶","中凶","大凶"]
             push =
-              "今日は後輩にジュースを奢ると運気アップ間違いなし！"
-<<<<<<< HEAD
+              "#{word}\nラッキーアイテム→後輩にジュースを奢ると運気アップ間違いなし！"
+          when /.*(こんにちわ|うるさい|おはよう).*/
+            push =
+              "うるさくないです。\n"
           when /.*(小田).*/
             push =
               "千円下さい！"
@@ -84,15 +88,6 @@ class RainbotController < ApplicationController
           else
               push =
                 "うるせぇ！"
-=======
-          when /.*(こんにちわ|うるさい|おはよう).*/
-            push =
-              "うるさくないです。\n"
-          else
-              push =
-                "うるせぇ"
-            end
->>>>>>> 15e7b8a5f34a0fadff1ac3390e6e2f7b67d42d22
           end
           # テキスト以外（画像等）のメッセージが送られた場合
         else
