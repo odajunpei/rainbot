@@ -66,7 +66,7 @@ class RainbotController < ApplicationController
             word =
               ["大吉","小吉", "中吉","凶","凶","大凶","中凶","大凶"].sample
             push =
-              "#{word}\nラッキーアイテム→後輩にジュースを奢ると運気アップ間違いなし！"
+              "#{word}\nラッキー→後輩にジュースを奢ると運気アップ間違いなし！"
           when /.*(こんにちわ|うるさい|おはよう).*/
             push =
               "うるさくないです。\n"
