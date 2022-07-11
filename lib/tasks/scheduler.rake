@@ -28,7 +28,7 @@ task :update_feed => :environment do
   min_per = 20
   if per06to12.to_i >= min_per || per12to18.to_i >= min_per || per18to24.to_i >= min_per
     word1 =
-      ["今日の一曲:"].sample
+      ["今日の一曲:https://www.youtube.com/watch?v=UU1NWDeoDsQ"].sample
     word2 =
       ["one for all, all for one",
        "ジュースを奢ろう",
